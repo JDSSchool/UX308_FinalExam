@@ -4,7 +4,7 @@ import { handleInput } from '../Order';
 import ChatView from './ChatView'
 import WelcomeView from './WelcomeView';
 
-export default function(){
+export default function AIView(){
   const [messages, setMessages] = useState([]);
   const [inputBarText, setInputBarText] = useState('');
   const scrollViewRef = useRef(null);
@@ -36,12 +36,17 @@ export default function(){
     scrollToBottom();
   }, [messages]);
 
-  const sendMessage = () => {
-    if (inputBarText.trim().length === 0) return;
+  const clearMessages = () => {
+    setMessages([]);
+    setInputBarText('');
+  };
 
-    // Correct way to update state: create a NEW array
-    let newMessages = [{ direction: 'right', text: inputBarText }];
-    const aResponse = handleInput(inputBarText);
+  const sendMessage = (textToSend = inputBarText) => {
+    const trimmedText = textToSend.trim();
+    if (trimmedText.length === 0) return;
+
+    let newMessages = [{ direction: 'right', text: trimmedText }];
+    const aResponse = handleInput(trimmedText);
     for(const message of aResponse){
       newMessages.push({direction: "left", text: message});
     }
@@ -62,7 +67,8 @@ export default function(){
         styles={styles} 
         messages={messages} 
         setInputBarText={setInputBarText}
-        inputBarText={inputBarText}  />
+        inputBarText={inputBarText}
+        clearMessages={clearMessages}  />
 
         ):(
           <WelcomeView 

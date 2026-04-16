@@ -26,4 +26,17 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  {
+    files: ['spec/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.browser,
+        describe: 'readonly',
+        beforeEach: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+      },
+    },
+  },
 ])

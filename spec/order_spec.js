@@ -1,21 +1,29 @@
 import { handleInput, clearInput } from '../src/Order.js';
 
-describe("Tests all stages of an order", function () {
+describe("Tests all stages of a salon order", function () {
     beforeEach(function () {
         clearInput();
     });
-    it("test hello", function () {
+    it("test welcoming", function () {
         const aResults = handleInput("hello");
-        expect(aResults[0]).toBe("Welcome to Rich's Acton Rapid Test.");
+        expect(aResults[0]).toBe("Welcome to Glamour Salon!");
     });
-    it("test yes", function () {
+    it("test buzz cut", function () {
         handleInput("hello");
+        const aResults = handleInput("buzz cut");
+        expect(aResults[0]).toBe("Great choice! You've selected a buzz cut.");
+    });
+    it("test upselling yes", function () {
+        handleInput("hello");
+        handleInput("buzz cut");
         const aResults = handleInput("yes");
-        expect(aResults[0]).toBe("Your rapid test is reserved");
+        expect(aResults[0]).toBe("Perfect! Added the product to your order.");
     });
-    it("test no", function () {
+    it("test confirming yes", function () {
         handleInput("hello");
-        const aResults = handleInput("no");
-        expect(aResults[0]).toBe("Thanks for trying our reservation system");
+        handleInput("buzz cut");
+        handleInput("yes");
+        const aResults = handleInput("yes");
+        expect(aResults[0]).toBe("Appointment confirmed!");
     });
 });
